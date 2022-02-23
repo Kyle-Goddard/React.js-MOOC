@@ -1,0 +1,19 @@
+note over browser:
+User hits submit button
+end note
+
+note over browser:
+new note is appended to HTML list of elements
+end note
+
+note over browser:
+new note is sent to server as JSON string
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+browser-->server: JSON: [{ date: "2021-12-30T08:51:20.861Z", content: "new note" }]
+
+note over server:
+Server processes form data, 
+adds new note to database, 
+end note
