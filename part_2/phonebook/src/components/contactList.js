@@ -1,16 +1,26 @@
 import React from "react";
+import personService from "../services/persons";
 
-const Person = ({ person }) => {
+const Person = ({ person, setPersons }) => {
+  const remove = () => {
+    if (window.confirm("Are you sure you wish to delete this constact?")) {
+      personService
+        .removePerson(person.id)
+        .then(() =>
+          personService.getAll().then((persons) => setPersons(persons))
+        );
+    }
+  };
+
   return (
     <div>
       {person.name} : {person.number}
+      <button onClick={remove}>Delete</button>
     </div>
   );
 };
 
-function ContactList(props) {
-  const persons = props.persons;
-  const filter = props.filter;
+function ContactList({ persons, setPersons, filter }) {
   return (
     <>
       <h2>Numbers</h2>
@@ -23,7 +33,13 @@ function ContactList(props) {
               }
             })
             .map((person) => {
-              return <Person key={person.name} person={person} />;
+              return (
+                <Person
+                  key={person.id}
+                  person={person}
+                  setPersons={setPersons}
+                />
+              );
             })
         : "none"}
     </>
